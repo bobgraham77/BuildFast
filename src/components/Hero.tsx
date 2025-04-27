@@ -78,10 +78,10 @@ const Hero: React.FC = () => {
                 <div className='flex flex-col md:flex-row justify-center align-center gap-3'>
                     <div className='-space-x-5 avatar-group justify-start overflow-hidden rounded-full '>
                             {avatars.map((avatar, index) => (
-                                <div className='avatar w-12 h-12 relative inline-flex'>
-                                    <img key={index} src={avatar} alt={`Avatar ${index + 1}`} fetchPriority='high' width={400} height={400} decoding='async' style={{color:'transparent'}}  />
-                                </div>
-                            ))}
+  <div className='avatar w-12 h-12 relative inline-flex' key={avatar}>
+    <img src={avatar} alt={`Avatar ${index + 1}`} fetchPriority='high' width={400} height={400} decoding='async' style={{color:'transparent'}} />
+  </div>
+))}
                     </div>
                     <div className='flex flex-col justify-center items-center md:items-start gap-1'>
                         <div className='relative inline-flex gap-1'>

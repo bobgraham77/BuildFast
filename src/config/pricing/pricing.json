@@ -15,9 +15,9 @@
         "plans": [
           {
             "name": "Starter",
-            "originalPrice": "₹4,100",
-            "discountedPrice": "₹0",
-            "currency": "INR",
+            "originalPrice": "497€",
+            "discountedPrice": "297",
+            "currency": "€",
             "popular": false,
             "features": {
                 "feature1": {
