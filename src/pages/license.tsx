@@ -74,10 +74,12 @@ export default function Terms() {
             <h1 className="text-3xl font-bold">{brand} License Agreement</h1>
             <div className='text-sm font-normal flex flex-col gap-5'>
               {licenseAgreementSections.map((section, index) => (
-                <div key={index} className='flex flex-col gap-2'>
+  <div key={section.title || index}>
+                <div key={section.title || index} className='flex flex-col gap-2'>
                   <h2 className='font-semibold text-lg'>{section.title}</h2>
                   <p className='text-foreground-hsl/70 text-base' dangerouslySetInnerHTML={{ __html: section.content }}></p>
                 </div>
+              </div>
               ))}
               <div>
                 <p className='text-opacity-75'>This document was last updated on the 25th of Sep 2024.</p>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import Header from "@components/Header";
 import "@styles/globals.css";
-import Head from "next/head";
+
 import Footer from "@components/Footer";
 import { ThemeProvider } from "next-themes";
 import NavbarCenter from "@components/Navbars/Navbar_center";
@@ -15,6 +15,7 @@ const Bricolage = Bricolage_Grotesque({
  });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("http://localhost:3000"),
   title: "BuildFast",
   description: "Nextjs SaaS Landing Page boilerplate",
   icons: {
@@ -32,7 +33,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-
 };
 
 export default function RootLayout({
@@ -43,11 +43,7 @@ export default function RootLayout({
   
   return (
     <html suppressHydrationWarning lang="en">
-      <Head>
-        <title>{String(metadata.title) || "Default Title"}</title>
-        <meta name="description" content={metadata.description || "Default description"} />
-        <link rel="icon" href="./favicon.ico" />
-      </Head>
+
 
       <body className={Bricolage.className}>
         <ThemeProvider
