@@ -68,9 +68,22 @@ const Header: React.FC = () => {
             </a>
             <a href={cta.href} 
             className="bg-nav-cta-btn-bg border border-nav-cta-btn-border font-brico text-foreground-opposite px-4 py-2 rounded-lg flex flex-row items-center gap-1 transition delay-75 group"
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault();
-              window.open(cta.href, '_blank', 'noopener,noreferrer');
+              if (cta.href && cta.href.startsWith('stripe:')) {
+                const priceKey = cta.href.split(':')[1];
+                const { default: useStripeCheckout } = await import('@hooks/useStripeCheckout');
+                const handleCheckout = useStripeCheckout();
+                const { default: StripeConfig } = await import('@config/paymentsConfig/stripe.json');
+                const { prices } = StripeConfig;
+                if (priceKey in prices) {
+                  handleCheckout({ priceId: prices[priceKey as keyof typeof prices] });
+                } else {
+                  alert('Erreur de configuration du paiement.');
+                }
+              } else {
+                window.open(cta.href, '_blank', 'noopener,noreferrer');
+              }
             }}
             >
                 {cta.text} 
@@ -134,6 +147,23 @@ const Header: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.5, delay: 0.4 }}
+            onClick={async (e) => {
+              e.preventDefault();
+              if (cta.href && cta.href.startsWith('stripe:')) {
+                const priceKey = cta.href.split(':')[1];
+                const { default: useStripeCheckout } = await import('@hooks/useStripeCheckout');
+                const handleCheckout = useStripeCheckout();
+                const { default: StripeConfig } = await import('@config/paymentsConfig/stripe.json');
+                const { prices } = StripeConfig;
+                if (priceKey in prices) {
+                  handleCheckout({ priceId: prices[priceKey as keyof typeof prices] });
+                } else {
+                  alert('Erreur de configuration du paiement.');
+                }
+              } else {
+                window.open(cta.href, '_blank', 'noopener,noreferrer');
+              }
+            }}
           >
                   {cta.text}
             <ArrowRight className="transform transition-transform duration-300 group-hover:translate-x-1" />

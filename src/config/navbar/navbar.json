@@ -1,13 +1,12 @@
  {  "brand": "BuildFast",
     "logo": "RocketLaunch",
     "links": [
-      { "text": "Github", "href": "https://github.com/chiragksharma/BuildFast" },
       { "text": "Pricing", "href": "#pricing" },
       { "text": "Reviews", "href": "#testinomials" }
     ],
     "cta": {
       "text": "Get Started",
-      "href": "https://chatgpt.com/g/g-9mJXEHce4-buildfast-build-your-landing-page-in-5-minutes"
+      "href": "stripe:oneTime49"
     },
     "mobileMenu": [
         { "text": "Github", "href": "https://github.com/chiragksharma/BuildFast" } ,

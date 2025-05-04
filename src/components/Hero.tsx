@@ -63,7 +63,24 @@ const Hero: React.FC = () => {
                 <p className="text-lg text-foreground-hsl/85 font-medium leading-relaxed">{description}</p>
                 <div className='space-y-4 w-3/4'>
                     
-                    <ButtonPrimary text={ctaText} redirect={ctaLink} toolTipText="Go build something"/>
+                    <ButtonPrimary text={ctaText} toolTipText="Start Now"
+    onClick={async () => {
+      if (ctaLink && ctaLink.startsWith('stripe:')) {
+        const priceKey = ctaLink.split(':')[1];
+        const { default: useStripeCheckout } = await import('@hooks/useStripeCheckout');
+        const handleCheckout = useStripeCheckout();
+        const { default: StripeConfig } = await import('@config/paymentsConfig/stripe.json');
+        const { prices } = StripeConfig;
+        if (priceKey in prices) {
+          handleCheckout({ priceId: prices[priceKey as keyof typeof prices] });
+        } else {
+          alert('Erreur de configuration du paiement.');
+        }
+      } else {
+        window.open(ctaLink, '_blank', 'noopener,noreferrer');
+      }
+    }}
+/>
                     <p className='text-sm flex justify-center items-center gap-2 md:text-sm'>
                         {/* <Gift color="#55cc00"/> */}
                         <img src="/icons/gift-icon.svg" alt="gift icon" />
