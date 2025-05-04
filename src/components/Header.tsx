@@ -5,9 +5,11 @@ import { getIconByName } from '@utils/getIconFromName';
 import { ArrowRight,List,X,PaintBucket } from 'phosphor-react';
 import NavPopup from '@atoms/NavPopup';
 import navbarConfig from '@config/navbar/navbar.json';
+import useStripeCheckout from '@hooks/useStripeCheckout';
 
 
 const Header: React.FC = () => {
+  const handleCheckout = useStripeCheckout();
   const [isOpen, setIsOpen] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const themeLinkRef = useRef<HTMLAnchorElement>(null);
@@ -72,8 +74,6 @@ const Header: React.FC = () => {
               e.preventDefault();
               if (cta.href && cta.href.startsWith('stripe:')) {
                 const priceKey = cta.href.split(':')[1];
-                const { default: useStripeCheckout } = await import('@hooks/useStripeCheckout');
-                const handleCheckout = useStripeCheckout();
                 const { default: StripeConfig } = await import('@config/paymentsConfig/stripe.json');
                 const { prices } = StripeConfig;
                 if (priceKey in prices) {
@@ -151,8 +151,6 @@ const Header: React.FC = () => {
               e.preventDefault();
               if (cta.href && cta.href.startsWith('stripe:')) {
                 const priceKey = cta.href.split(':')[1];
-                const { default: useStripeCheckout } = await import('@hooks/useStripeCheckout');
-                const handleCheckout = useStripeCheckout();
                 const { default: StripeConfig } = await import('@config/paymentsConfig/stripe.json');
                 const { prices } = StripeConfig;
                 if (priceKey in prices) {
