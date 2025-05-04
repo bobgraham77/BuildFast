@@ -50,24 +50,18 @@ const Pricing: React.FC = () => {
                         </div>
                     )}
                     {plan.badge && <div className="absolute -inset-[1px] rounded-[8px]  z-10"></div>}
-                    <div className='relative flex flex-col gap-5 lg:gap-8 z-10  p-8 rounded-lg'>
-                        <div className='flex flex-col items-center gap-4'>
-                           
-                            <div><p className="text-lg lg:text-xl font-bold  ">{plan.name}</p></div>
-                        </div>
-                        <div className="flex gap-2 mb-2">
-                            <div className="flex flex-col justify-end mb-[4px] text-lg ">
-                            <p className="relative opacity-80">
-                                <span className="absolute bg-base-content h-[1.5px] inset-x-0 top-[48%]"></span>
-                                <span className="text-base-content line-through">{plan.originalPrice}</span>
-                            </p>
-                            </div>
-                            <p className="text-5xl tracking-tight font-extrabold">{plan.discountedPrice}</p>
-                            <div className="flex flex-col justify-end mb-[4px]">
-                                <p className="text-xs opacity-60 uppercase font-semibold">{plan.currency}</p>
-                            </div>
-                        </div>
-                        <ul className='space-y-2.5 leading-relaxed text-base flex-1'>
+                    <div className='relative flex flex-col gap-5 lg:gap-8 z-10 p-8 rounded-lg items-center'>
+    <div className='flex flex-col items-center gap-4'>
+        <div><p className="text-lg lg:text-xl font-bold">{plan.name}</p></div>
+    </div>
+    <div className="flex flex-col items-center justify-center gap-2 mb-4">
+        <div className="flex items-center gap-2">
+            <span className="text-base-content line-through text-lg lg:text-xl opacity-60">{plan.originalPrice}</span>
+            <span className="text-6xl lg:text-7xl tracking-tight font-extrabold text-white">{plan.discountedPrice}</span>
+            <span className="text-base lg:text-lg opacity-80 font-semibold ml-1">{plan.currency}</span>
+        </div>
+    </div>
+    <ul className='space-y-3 leading-relaxed text-lg lg:text-xl font-semibold flex flex-col items-start mb-4'>
                         {Object.keys(plan.features).map((key, i) => {
                             const feature: PricingFeature = plan.features[key];
                             return (
@@ -104,16 +98,22 @@ const Pricing: React.FC = () => {
                         </ul>
                         <div className='space-y-2'>
                         <ButtonPrimary text={plan.buttonText} toolTipText="Go build something"
-                            onClick={() => {
-                                if (plan.btnLink) {
-                                    window.open(plan.btnLink, '_blank', 'noopener noreferrer');
-                                } else {
-                                    // handleCheckout({ amount: prices.discountedPrice }); // For Razorpay
-                                    //or
-                                    handleCheckout({ priceId: prices.premium }); // For Stripe
-                                }
-                            }}                        
-                        />
+    onClick={() => {
+        if (plan.btnLink && plan.btnLink.startsWith('stripe:')) {
+            // Si btnLink = 'stripe:oneTime49', on declenche Stripe Checkout avec ce priceId
+            const priceKey = plan.btnLink.split(':')[1];
+            if (priceKey in prices) {
+                handleCheckout({ priceId: prices[priceKey as keyof typeof prices] });
+            } else {
+                alert('Erreur de configuration du paiement.');
+            }
+        } else if (plan.btnLink) {
+            window.open(plan.btnLink, '_blank', 'noopener noreferrer');
+        } else {
+            handleCheckout({ priceId: prices.premium }); // fallback Stripe
+        }
+    }}
+/>
                             <p className="flex items-center justify-center gap-2 text-sm text-center text-base-content/80 font-medium relative">
                                 {plan.note}
                             </p>

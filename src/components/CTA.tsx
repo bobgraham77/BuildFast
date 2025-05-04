@@ -22,7 +22,22 @@ const CTA: React.FC = () => {
                 <p className="relative text-lg text-base-content/80">{description}</p>
                 </div>
                <div className='w-3/4 md:w-1/4 flex items-center'>
-                <ButtonLead text={buttonText} toolTipText={buttonToolTip}/>
+                <ButtonLead text={buttonText} toolTipText={buttonToolTip} onClick={() => {
+    if (ctaConfig.btnLink && ctaConfig.btnLink.startsWith('stripe:')) {
+        const priceKey = ctaConfig.btnLink.split(':')[1];
+        import('@hooks/useStripeCheckout').then(({ default: useStripeCheckout }) => {
+            const handleCheckout = useStripeCheckout();
+            import('@config/paymentsConfig/stripe.json').then(({ default: StripeConfig }) => {
+                const { prices } = StripeConfig;
+                if (priceKey in prices) {
+                    handleCheckout({ priceId: prices[priceKey as keyof typeof prices] });
+                } else {
+                    alert('Erreur de configuration du paiement.');
+                }
+            });
+        });
+    }
+}}/>
                </div>
                 
             </div>

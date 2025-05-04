@@ -15,8 +15,8 @@
         "plans": [
           {
             "name": "Starter",
-            "originalPrice": "497€",
-            "discountedPrice": "297",
+            "originalPrice": "97€",
+            "discountedPrice": "49.97",
             "currency": "€",
             "popular": false,
             "features": {
@@ -177,10 +177,10 @@
                 }
 
               },
-            "buttonText": "Start Free",
-            "btnLink": "https://github.com/chiragksharma/BuildFast",
+            "buttonText": "Start for Only 49.97€ (Early bird Offer)",
+            "btnLink": "stripe:oneTime49",
             "buttonClass": "btn btn-primary group btn-block",
-            "note": "STAR the repo on Github",
+            "note": "Payment secure via Stripe",
             "noteClass": "flex items-center justify-center gap-2 text-sm text-center text-base-content/80 font-medium relative"
           }
          
