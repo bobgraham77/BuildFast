@@ -1,8 +1,10 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import dynamic from 'next/dynamic';
 import siteConfig from '@config/siteConfig.json';
-import ReactPlayer from 'react-player';
 import AboutConfig from '@config/about/about.json';
+
+const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 const About: React.FC = () => {
     const { videoUrl } = AboutConfig;
